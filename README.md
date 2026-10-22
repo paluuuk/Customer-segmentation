@@ -37,3 +37,11 @@ This is a historical exploratory notebook. It contains legacy pandas calls such 
 Cluster IDs are analytical groupings, not ground-truth business outcomes. A classifier learning those IDs does not independently validate the segments or prove future customer value. No new benchmark or production deployment is claimed.
 
 **Stack:** Python, pandas, NumPy, NLTK, scikit-learn, K-means, PCA, Matplotlib, seaborn, wordcloud.
+
+## Related engineering projects
+
+- [Airbnb sentiment and recommendations](https://github.com/paluuuk/Sentiment-Analysis-and-Recommendation-System)
+- [Satellite image classification](https://github.com/paluuuk/Satellite_Image_Classification)
+
+[View all selected engineering work](https://github.com/paluuuk)
+
