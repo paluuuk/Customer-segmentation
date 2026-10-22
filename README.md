@@ -1,92 +1,39 @@
-# Customer Segmentation for E-Commerce
+# E-Commerce Customer Segmentation
 
-Customer analytics project for segmenting online-retail users into behaviorally meaningful groups using **RFM analysis, K-means clustering, and PCA**.
+An exploratory retail-analytics notebook that builds product and customer segments from transaction history, then compares classifiers for assigning customers to those segments.
 
-The project explores how transaction history can be transformed into customer-level features and used to identify segments that support retention, targeting, and customer-lifetime-value analysis.
+## What the notebook implements
 
-## Problem
+1. Clean missing customer records, cancelled orders, and transaction adjustments.
+2. Build product-description features with NLTK tokenization, noun selection, stemming, and price-band indicators.
+3. Cluster products into five groups with K-means and inspect silhouette scores and PCA projections.
+4. Aggregate customer basket statistics and spending shares across those product groups.
+5. Scale the customer features, build eleven customer clusters, and inspect their separation.
+6. Compare supervised segment classifiers, including SVM and Random Forest, and inspect a later transaction period.
 
-Raw e-commerce transaction data is difficult to use directly for customer strategy. The goal of this project is to convert purchase history into interpretable customer features and group users according to purchasing behavior.
+The customer clustering uses basket counts, minimum/maximum/mean basket value, and product-category spending shares. Purchase-recency fields are also derived, but this is not simply a three-feature RFM model or a deployed lifetime-value predictor.
 
-## Analysis Workflow
+## Start here
 
-```text
-Retail Transactions
-        ↓
-Data Cleaning
-        ↓
-Customer-Level Aggregation
-        ↓
-RFM Features
-Recency · Frequency · Monetary Value
-        ↓
-Feature Scaling
-        ↓
-K-Means Clustering
-        ↓
-PCA for Visualization
-        ↓
-Customer Segments
-        ↓
-CLV / Business Interpretation
-```
-
-## Methods
-
-### RFM analysis
-
-Customer behavior is represented through:
-
-- **Recency** — how recently a customer purchased
-- **Frequency** — how often they purchase
-- **Monetary value** — how much they spend
-
-These features provide a compact representation of purchasing behavior for downstream clustering.
-
-### K-means clustering
-
-K-means is used to partition customers into groups with similar transaction characteristics, enabling a data-driven alternative to manually defined customer tiers.
-
-### PCA
-
-Principal Component Analysis is used to reduce the dimensionality of the customer feature space and make cluster structure easier to visualize and interpret.
-
-### Customer lifetime value context
-
-The analysis connects behavioral segmentation with customer-value metrics so that clusters can be interpreted in commercially meaningful terms rather than as purely mathematical groups.
-
-## Tech Stack
-
-- Python
-- Pandas / NumPy
-- scikit-learn
-- K-means clustering
-- PCA
-- RFM analysis
-- Jupyter Notebook
-
-## Repository Structure
-
-```text
-Customer-segmentation/
-├── Customer_segmentation_online_retail.ipynb
-├── data.csv.zip
-└── README.md
-```
-
-## Running the Analysis
+- [Analysis notebook](Customer_segmentation_online_retail.ipynb)
+- [Dependency list](requirements.txt)
+- `data.csv.zip`: transaction archive used by the original analysis
 
 ```bash
 git clone https://github.com/paluuuk/Customer-segmentation.git
 cd Customer-segmentation
-pip install pandas numpy scikit-learn matplotlib seaborn jupyter
-jupyter notebook
+python -m venv .venv
+# Activate .venv using the command for your shell.
+python -m pip install -r requirements.txt
+jupyter notebook Customer_segmentation_online_retail.ipynb
 ```
 
-Open `Customer_segmentation_online_retail.ipynb` and run the analysis after extracting the included dataset archive.
+Extract the archive so the notebook can read `input_data/data.csv`. It uses ISO-8859-1 encoding. NLTK tokenization and tagging resources may need downloading in the local environment.
 
-## Current Status
+## Reproducibility and interpretation
 
-This repository is a notebook-based exploratory data-science project. It is best viewed as supporting evidence of clustering, dimensionality reduction, customer analytics, and feature-engineering experience rather than as a production ML system.
+This is a historical exploratory notebook. It contains legacy pandas calls such as `DataFrame.append` and `as_matrix`, so a current environment may need compatibility edits before an end-to-end rerun. The dependency list records imported packages; it is not a locked environment.
 
-Potential improvements include separating feature engineering from exploration, adding automated data validation, documenting cluster-selection criteria, reporting cluster stability, and moving the raw dataset outside the Git repository.
+Cluster IDs are analytical groupings, not ground-truth business outcomes. A classifier learning those IDs does not independently validate the segments or prove future customer value. No new benchmark or production deployment is claimed.
+
+**Stack:** Python, pandas, NumPy, NLTK, scikit-learn, K-means, PCA, Matplotlib, seaborn, wordcloud.
